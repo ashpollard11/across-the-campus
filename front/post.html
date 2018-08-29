@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title> Post A Message </title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="dist/css/main.css">
+		
+	</head>
+	<body>
+		<div class="container post-cont">
+			<h1></h1>
+
+			<form id="postForm">
+				<label>
+					Select a Category
+					<select id="type">
+					 	<option value="event">Event</option>
+					 	<option value="sale">For Sale/Giveaway</option>
+					 	<option value="service">Services</option>
+					 	<option value="informational">Informational</option>
+				 	</select>
+				</label>
+				 <label>
+				 	Username
+				 	<input type="text" id="username">
+				 </label>
+				 <label>
+				 	Event Date and Time
+				 	<input type="date" min="2018-01-01" max="2099-12-31" id="date">
+				 	<input type="time" id="time">
+				 </label>
+				 <label>
+				 	Event Name
+				 	<input type="text" id="eventTitle">
+				 </label>
+				 <label>
+				 	Description
+				 	<textarea rows="8" cols="80" id="description"></textarea>	
+				 </label>
+				 <label>
+				 	Select a Time of Expiry
+				 	<select id="expiryTime">
+				 	 	<option value="24">24hrs</option>
+				 	 	<option value="48">48hrs</option>
+				 	 	<option value="36">36hrs</option>
+				 	 	<option value="untilHourAfterEvent">1 Hour After Event</option>
+				  	</select>
+				 </label>
+				 <label>
+				 	Contact Email
+				 	<input type="email" id="email">
+				 </label>
+				 <label>
+				 	<input type="checkbox" id="comments" value="yes">
+				 	Check To Allow Comments
+				 </label>
+				 
+				 <button type="submit" id="submit">Submit</button>
+			</form>
+
+			<section class="confirmation">
+				<h2>Submission Complete</h2>
+				<a href="index.html">View Post</a>
+			</section>
+
+
+		</div>
+		
+		
+		
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- <script src="dist/js/homepage.js"></script> -->
+		<script src="dist/js/main.js"></script>
+
+	</body>
+</html>
