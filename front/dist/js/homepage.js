@@ -4,6 +4,9 @@ var postsFeed = document.querySelector('.col');
 
 window.addEventListener('load', function (e) {
 	showPosts();
+	setInterval(function () {
+		showPosts();
+	}, 5000);
 });
 
 var deletePosts = function deletePosts(post) {

@@ -4,6 +4,9 @@ const postsFeed = document.querySelector('.col')
 
 window.addEventListener('load', function(e) {
 	showPosts()
+	setInterval(function(){
+		showPosts()
+	}, 5000);
 })
 
 
