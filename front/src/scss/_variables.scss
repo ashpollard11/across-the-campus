@@ -1,0 +1,28 @@
+
+$copy-font: 'Montserrat', sans-serif;
+$heading-font: 'Fira Sans', sans-serif;
+$subheading-font: 'Lora', serif;
+
+$small-mobile-breakpoint: 370px;
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1024px;
+
+
+@mixin bp-sm-mobile {
+	@media only screen and (min-width: $small-mobile-breakpoint) {
+		@content;
+	}
+}
+
+@mixin bp-tablet {
+	@media only screen and (min-width: $tablet-breakpoint) {
+		@content;
+	}
+}
+
+@mixin bp-desktop {
+	@media only screen and (min-width: $desktop-breakpoint) {
+		@content;
+	}
+}
+

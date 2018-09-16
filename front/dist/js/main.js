@@ -1,59 +1,33 @@
-"use strict";
+'use strict';
 
-console.log("Skittles, Taste the Rainbow");
+console.log('Skittles, Taste the Rainbow');
 
-//input fields
+//search bar
+var searchInput = document.querySelector('#search-input');
+var search = document.querySelector('#search');
 
-var typeField = document.querySelector("#type");
-var usernameField = document.querySelector("#username");
-var dateField = document.querySelector("#date");
-var timeField = document.querySelector("#time");
-var eventTitleField = document.querySelector("#eventTitle");
-var descriptionField = document.querySelector("#description");
-var expiryTimeField = document.querySelector("#expiryTime");
-var emailField = document.querySelector("#email");
-var commentsField = document.querySelector("#comments");
+//area of posts
+var postsFeed = document.querySelector('.col');
 
-//buttons
+search.addEventListener("click", function (e) {
+	searchPosts();
+	searchInput.value = '';
 
-var submit = document.querySelector("#submit");
-
-//forms
-
-var form = document.querySelector("#postForm");
-var confirmation = document.querySelector(".confirmation");
-
-if (commentsField.checked) {
-	commentsField.value = 'addComments';
-}
-if (!commentsField.checked) {
-	commentsField.value = 'noComments';
-}
-
-//on click, pull data from info fields
-
-submit.addEventListener("click", function (e) {
-	e.preventDefault();
-	sendPost();
-	form.classList.add("is-inactive");
-	confirmation.classList.add("is-active");
+	scrollToTop(postsFeed);
 });
 
-var sendPost = function sendPost() {
-	var url = 'http://localhost:1337/post';
+var scrollToTop = function scrollToTop(element) {
+	element.scrollIntoView(true);
+};
 
-	axios.post(url, {
-		type: typeField.value,
-		username: usernameField.value,
-		date: dateField.value,
-		time: timeField.value,
-		eventTitle: eventTitleField.value,
-		description: descriptionField.value,
-		expiryTime: expiryTimeField.value,
-		email: emailField.value,
-		comments: commentsField.value
-	}).then(function (response) {
+var searchPosts = function searchPosts() {
+
+	var url = 'http://localhost:1337/search/';
+
+	axios.get(url + searchInput.value).then(function (response) {
 		console.log(response);
+
+		createPostsModule.createPosts(response.data);
 	}).catch(function (error) {
 		console.log(error);
 	});
