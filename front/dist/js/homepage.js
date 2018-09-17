@@ -4,13 +4,10 @@ var postsFeed = document.querySelector('.col');
 
 window.addEventListener('load', function (e) {
 	showPosts();
-	setInterval(function () {
-		showPosts();
-	}, 5000);
 });
 
 var deletePosts = function deletePosts(post) {
-	var url = 'http://localhost:1337/';
+	var url = 'http://159.65.67.93:1337/';
 
 	axios.delete(url, {
 		removePost: post
@@ -24,7 +21,7 @@ var deletePosts = function deletePosts(post) {
 };
 
 var showPosts = function showPosts() {
-	var url = 'http://localhost:1337/';
+	var url = 'http://159.65.67.93:1337/';
 
 	axios.get(url).then(function (response) {
 		console.log("array of posts: ", response.data);
@@ -232,6 +229,9 @@ var createPostsModule = function () {
 					commentCont.appendChild(commentTime);
 				});
 			};
+			//set comments as active on load 
+			commentsEl.classList.add('active');
+			commentsButton.innerHTML = '&#9651;';
 
 			//create current comments
 
@@ -243,7 +243,7 @@ var createPostsModule = function () {
 
 				console.log(index);
 
-				var url = 'http://localhost:1337/comment';
+				var url = 'http://159.65.67.93:1337/comment';
 
 				axios.post(url, {
 					comment: commentField.value,

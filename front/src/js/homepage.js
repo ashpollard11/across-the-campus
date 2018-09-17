@@ -2,16 +2,16 @@
 const postsFeed = document.querySelector('.col')
 
 
+
+
 window.addEventListener('load', function(e) {
 	showPosts()
-	setInterval(function(){
-		showPosts()
-	}, 5000);
 })
 
 
+
 const deletePosts = function(post) {
-	let url = 'http://localhost:1337/';
+	let url = 'http://159.65.67.93:1337/';
 
 	axios.delete(url, {
 		removePost: post
@@ -28,7 +28,7 @@ const deletePosts = function(post) {
 }
 
 const showPosts = function() {
-	let url = 'http://localhost:1337/';
+	let url = 'http://159.65.67.93:1337/';
 
 	axios.get(url)
 	.then(function (response) {
@@ -242,6 +242,9 @@ const createPostsModule = (function() {
 					commentCont.appendChild(commentTime)
 				})
 			}
+			//set comments as active on load 
+			commentsEl.classList.add('active');
+			commentsButton.innerHTML = '&#9651;'
 
 			//create current comments
 
@@ -253,7 +256,7 @@ const createPostsModule = (function() {
 
 				console.log(index)
 
-				let url = 'http://localhost:1337/comment';
+				let url = 'http://159.65.67.93:1337/comment';
 				
 
 				axios.post(url, {

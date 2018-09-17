@@ -43,7 +43,7 @@ const sendPost = function(comm) {
 	let formatDate = dateField.value;
 	let formatTime = timeField.value;
 
-	let url = 'http://localhost:1337/post';
+	let url = 'http://159.65.67.93:1337/post';
 
 	axios.post(url, {
 		type: typeField.value,
