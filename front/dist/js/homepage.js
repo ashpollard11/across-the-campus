@@ -169,21 +169,29 @@ var createPostsModule = function () {
 				}, 60000 * 60 * 48);
 			}
 
+			//delete this one soon
 			if (arr.expiryTime === "36") {
 				setTimeout(function () {
 					deletePosts(i);
 				}, 60000 * 60 * 36);
 			}
 
+			if (arr.expiryTime === "72") {
+				setTimeout(function () {
+					deletePosts(i);
+				}, 60000 * 60 * 72);
+			}
+
 			if (arr.expiryTime === "1 Hour After Event") {
 				var now = arr.timePosted;
 				var later = arr.date + "\xa0" + arr.time;
-				var ms = moment(later, "HH:mm:ss").diff(moment(now, "HH:mm:ss"));
 				var hour = 60000 * 60;
-
+				var ms = moment(later, "HH:mm:ss").diff(moment(now, "HH:mm:ss"));
+				var totalExpiry = ms + hour;
+				console.log("post " + i + " expires in " + totalExpiry + " seconds");
 				setTimeout(function () {
 					deletePosts(i);
-				}, ms + hour);
+				}, totalExpiry);
 			}
 
 			//if comments exist, append the children
