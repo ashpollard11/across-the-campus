@@ -1,27 +1,30 @@
-'use strict';
+"use strict";
 
-var postsFeed = document.querySelector('.col');
+var postsFeed = document.querySelector('.col1');
+// const postsFeed2 = document.querySelector('.col2')
+// const postsFeed3 = document.querySelector('.col3')
 
-window.addEventListener('load', function (e) {
-	showPosts();
-});
 
-var deletePosts = function deletePosts(post) {
-	var url = 'http://159.65.67.93:1337/';
+// const deletePosts = function(post) {
+// 	let url = API_URL;
 
-	axios.delete(url, {
-		removePost: post
-	}).then(function (response) {
-		console.log("array of current posts: ", response.data);
+// 	axios.delete(url, {
+// 		removePost: post
+// 	})
+// 	.then(function (response) {
+// 		console.log( "array of current posts: ", response.data);
 
-		createPostsModule.createPosts(response.data);
-	}).catch(function (error) {
-		console.log(error);
-	});
-};
+// 		createPostsModule.createPosts(response.data)
+
+// 	})
+// 	  .catch(function (error) {
+// 		console.log(error);
+// 	});
+// }
 
 var showPosts = function showPosts() {
-	var url = 'http://159.65.67.93:1337/';
+	console.log("showPOsts");
+	var url = API_URL;
 
 	axios.get(url).then(function (response) {
 		console.log("array of posts: ", response.data);
@@ -35,6 +38,8 @@ var showPosts = function showPosts() {
 var createPostsModule = function () {
 
 	var createPosts = function createPosts(obj) {
+
+		console.log("createPosts", obj);
 
 		postsFeed.innerHTML = '';
 
@@ -92,14 +97,15 @@ var createPostsModule = function () {
 			var sendButton = document.createElement('button');
 
 			dateTimeCont.classList.add('dateTimeCont');
-			dateEl.innerHTML = arr.date;
+			dateEl.innerHTML = moment(arr.date).format('ll');
 			// if (arr.time.charAt(0) === "0") {
 			// 	arr.time = arr.time.substr(1);
 			// }
-			timeEl.innerHTML = arr.time;
+			timeEl.innerHTML = moment(arr.time, "h:mm").format('LT');
 
 			titleTypeCont.classList.add('titleTypeCont');
 			eventTitleEl.innerHTML = arr.eventTitle;
+			article.classList.add(arr.type);
 			typeEl.innerHTML = arr.type;
 
 			descriptionEl.classList.add("description");
@@ -109,7 +115,7 @@ var createPostsModule = function () {
 			emailEl.innerHTML = "Contact: " + arr.email;
 
 			timePostedEl.classList.add("postDateTime");
-			timePostedEl.innerHTML = "Date Posted: " + arr.timePosted;
+			timePostedEl.innerHTML = "Date Posted: " + moment(arr.timePosted).format('lll');
 
 			//if the comments area is true, add the button and title comments
 			//the comment inputs are set, the button is added
@@ -123,18 +129,33 @@ var createPostsModule = function () {
 				commentsLabel.innerHTML = "Comments";
 				commentsButton.innerHTML = '&#9661;';
 				commenter.type = "text";
+				commenter.placeholder = "Name";
 				commentBox.rows = "5";
+				commentBox.placeholder = "Enter comment here";
 				commentsForm.classList.add('comment-form');
 				commenter.classList.add('comment-user');
 				commentBox.classList.add('comment-input');
 				sendButton.classList.add('send-comment');
-				commenterLabel.innerHTML = "Name: ";
-				commentBoxLabel.innerHTML = "Reply: ";
+				// commenterLabel.innerHTML = "Name: "
+				// commentBoxLabel.innerHTML = "Reply: "
 				sendButton.innerHTML = "send";
 				sendButton.type = "button";
 			} else {
 				commentsEl.innerHTML = "Comments are disabled for this post.";
 			}
+
+			// let count = 1;
+
+			// if (count = 1) {
+			// 	postsFeed1.appendChild(article);
+			// 	count++;
+			// } if (count = 2) {
+			// 	postsFeed2.appendChild(article);
+			// 	count++;
+			// } else if (count = 3) {
+			// 	postsFeed3.appendChild(article);
+			// 	count = 1;
+			// }
 
 			postsFeed.appendChild(article);
 			article.appendChild(dateTimeCont);
@@ -157,42 +178,25 @@ var createPostsModule = function () {
 			article.appendChild(commentsCont);
 
 			//if expiry time passes, remove child
-			if (arr.expiryTime === "24") {
-				setTimeout(function () {
-					deletePosts(i);
-				}, 60000 * 60 * 24);
-			}
 
-			if (arr.expiryTime === "48") {
-				setTimeout(function () {
-					deletePosts(i);
-				}, 60000 * 60 * 48);
-			}
 
-			//delete this one soon
-			if (arr.expiryTime === "36") {
-				setTimeout(function () {
-					deletePosts(i);
-				}, 60000 * 60 * 36);
-			}
+			// if (arr.expiryTime === "1 Hour After Event") {
+			// 	let now  = arr.timePosted
+			// 	let later = arr.date + "\xa0" +  arr.time;
+			// 	let hour = 60000*60
+			// 	let ms = moment(later,"HH:mm:ss").diff(moment(now,"HH:mm:ss"));
+			// 	let totalExpiry = ms + hour
+			// 	console.log("post " + i + " expires in " + totalExpiry + " seconds")
+			// 	setTimeout(function(){
+			// 		deletePosts(i)
+			// 	}, totalExpiry);
 
-			if (arr.expiryTime === "72") {
-				setTimeout(function () {
-					deletePosts(i);
-				}, 60000 * 60 * 72);
-			}
+			// } else if (arr.expiryTime) {
+			// 	setTimeout(function(){
+			// 		deletePosts(i)
+			// 	}, 60000*60*arr.expiryTime);
+			// }
 
-			if (arr.expiryTime === "1 Hour After Event") {
-				var now = arr.timePosted;
-				var later = arr.date + "\xa0" + arr.time;
-				var hour = 60000 * 60;
-				var ms = moment(later, "HH:mm:ss").diff(moment(now, "HH:mm:ss"));
-				var totalExpiry = ms + hour;
-				console.log("post " + i + " expires in " + totalExpiry + " seconds");
-				setTimeout(function () {
-					deletePosts(i);
-				}, totalExpiry);
-			}
 
 			//if comments exist, append the children
 			//else, only append the element stating a disabled comment area
@@ -204,11 +208,11 @@ var createPostsModule = function () {
 				commentsDiv.appendChild(commentsLabel);
 				commentsForm.appendChild(commentsEl);
 
-				commentsForm.appendChild(commenterLabel);
-				commenterLabel.appendChild(commenter);
+				commentsForm.appendChild(commenter);
+				// commenterLabel.appendChild(commenter);
 
-				commentsForm.appendChild(commentBoxLabel);
-				commentBoxLabel.appendChild(commentBox);
+				commentsForm.appendChild(commentBox);
+				// commentBoxLabel.appendChild(commentBox);
 				commentsForm.appendChild(sendButton);
 			} else {
 				commentsCont.appendChild(commentsForm);
@@ -239,7 +243,7 @@ var createPostsModule = function () {
 			};
 			//set comments as active on load 
 			commentsEl.classList.add('active');
-			commentsButton.innerHTML = '&#9651;';
+			commentsButton.innerHTML = '&#9655;';
 
 			//create current comments
 
@@ -251,7 +255,7 @@ var createPostsModule = function () {
 
 				console.log(index);
 
-				var url = 'http://159.65.67.93:1337/comment';
+				var url = API_URL + 'comment';
 
 				axios.post(url, {
 					comment: commentField.value,
@@ -279,9 +283,9 @@ var createPostsModule = function () {
 			commentsButton.addEventListener("click", function (e) {
 				commentsEl.classList.toggle('active');
 				if (commentsEl.classList.contains('active')) {
-					commentsButton.innerHTML = '&#9651;';
+					commentsButton.innerHTML = '&#9655;';
 				} else {
-					commentsButton.innerHTML = '&#9661;';
+					commentsButton.innerHTML = '&#9658;';
 				}
 			});
 		});
@@ -291,4 +295,6 @@ var createPostsModule = function () {
 		createPosts: createPosts
 	};
 }();
+
+window.addEventListener('load', showPosts);
 //# sourceMappingURL=homepage.js.map

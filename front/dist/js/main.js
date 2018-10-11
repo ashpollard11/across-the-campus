@@ -22,7 +22,7 @@ var scrollToTop = function scrollToTop(element) {
 
 var searchPosts = function searchPosts() {
 
-	var url = 'http://159.65.67.93:1337/search/';
+	var url = API_URL + 'search/';
 
 	axios.get(url + searchInput.value).then(function (response) {
 		console.log(response);

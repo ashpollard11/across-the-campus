@@ -43,18 +43,19 @@ const sendPost = function(comm) {
 	let formatDate = dateField.value;
 	let formatTime = timeField.value;
 
-	let url = 'http://159.65.67.93:1337/post';
+	let url = API_URL+'post';
 
 	axios.post(url, {
-		type: typeField.value,
-		username: usernameField.value,
-		date: moment(formatDate).format("MMM Do YYYY"),
-		time: moment(formatTime, "HH:mm").format("h:mm A"),
-		eventTitle: eventTitleField.value,
-		description: descriptionField.value,
-		expiryTime: expiryTimeField.value,
-		email: emailField.value,
-		comments: comm
+		type: 			typeField.value,
+		username: 		usernameField.value,
+		date: 			dateField.value,
+		time: 			timeField.value,
+		eventTitle: 	eventTitleField.value,
+		description: 	descriptionField.value,
+		expiryTime: 	expiryTimeField.value,
+		email: 			emailField.value,
+		comments: 		comm,
+		timeZone: 		moment().format("Z")
 	})
 	.then(function (response) {
 		console.log(response);

@@ -22,38 +22,50 @@ let arrayPosts = []
 
 
 app.post('/post', function(req, res) {
-	arrayPosts.push({
-		"type": req.body.type,
-		"username": req.body.username,
-		"date": req.body.date,
-		"time": req.body.time,
-		"eventTitle": req.body.eventTitle,
-		"description": req.body.description,
-		"expiryTime": req.body.expiryTime,
-		"email": req.body.email,
-		"comments": req.body.comments,
-		"commentsArr": [],
-		"timePosted": moment().format('MMM Do YYYY, h:mm a')
-	})
+
+	// instead of just saving 24 or 48 or 72
+	// calculate the exact expiration time and save that instead
+
+	var newPost = {
+		type: 			req.body.type,
+		username: 		req.body.username,
+		date: 			req.body.date,
+		time: 			req.body.time,
+		eventTitle: 	req.body.eventTitle,
+		description: 	req.body.description,
+		expiryTime: 	req.body.expiryTime,
+		email: 			req.body.email,
+		comments: 		req.body.comments,
+		commentsArr: 	[],
+		timePosted: 	moment().format()
+	}
+
+	if (req.body.expiryTime === "untilHourAfterEvent") {
+
+		newPost.timeToExpire = moment(req.body.date + " " + req.body.time)
+			.add(1, "hours")
+			.format()
+	} else {
+		newPost.timeToExpire = moment().add( newPost.expiryTime, "hours")
+	}
+
+	arrayPosts.unshift(newPost)
 	console.log('posts array: ', arrayPosts)
+	console.log("current server time is", moment().format('MMM Do YYYY, h:mm a'))
+
 	res.send(arrayPosts)
 })
 
 
 app.get('/', function(req, res) {
-	console.log(
-		arrayPosts.type,
-		arrayPosts.username,
-		arrayPosts.date,
-		arrayPosts.time,
-		arrayPosts.eventTitle,
-		arrayPosts.description,
-		arrayPosts.expiryTime,
-		arrayPosts.email,
-		arrayPosts.comments,
-		arrayPosts.timePosted
-	)
-	res.send(arrayPosts)
+	
+	// filter out the expired posts before sending them
+
+	let filteredPosts = arrayPosts.filter(arr => moment().diff(arr.timeToExpire) < 0);
+	console.log(filteredPosts)
+
+	// arrayPosts.filter((arr) => moment().diff(arr.timeToExpire) < 0 );
+	res.send(filteredPosts)
 })
 
 app.delete('/', function(req, res) {
@@ -65,7 +77,7 @@ app.delete('/', function(req, res) {
 
 
 app.post('/comment', function(req, res) {
-	arrayPosts[req.body.postIndex].commentsArr.push({
+	arrayPosts[req.body.postIndex].commentsArr.unshift({
 		"comment": req.body.comment,
 		"username": req.body.username,
 		"timePosted": moment().format('MMM Do YYYY, h:mm a')		
@@ -82,10 +94,14 @@ app.post('/comment', function(req, res) {
 // })
 
 
-
 app.get('/search/:term', function(req, res) {
+
+	// filter out the expired posts before sending them
+
+	let filteredPosts = arrayPosts.filter(arr => moment().diff(arr.timeToExpire) < 0);
+	console.log(filteredPosts)
 	
-	const searchResult = arrayPosts.filter((arr) => Object.values(arr).includes(req.params.term));
+	let searchResult = filteredPosts.filter(arr => Object.values(arr).includes(req.params.term));
 	res.send(searchResult)
 })
 

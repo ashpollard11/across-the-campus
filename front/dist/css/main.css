@@ -1,7 +1,7 @@
 /* 
 ==============================================
-CONTENT:	Project Name Here
-AUTHOR:		Your Name Here
+CONTENT:	Across The Campus
+AUTHOR:		Ashley Pollard
 ==============================================
 
 TABLE OF CONTENTS:
@@ -84,10 +84,9 @@ body {
 
 @media only screen and (min-width: 768px) {
 	body .col {
-		flex-flow: row wrap;
+		column-count: 2;
 	}
 	body .col article {
-		width: 49%;
 		height: fit-content;
 	}
 	body .col article:nth-child(odd) {
@@ -96,8 +95,10 @@ body {
 }
 
 @media only screen and (min-width: 1024px) {
+	body .col {
+		column-count: 3;
+	}
 	body .col article {
-		width: 32%;
 		margin-right: 0.8em;
 	}
 	body .col article:nth-child(3n) {
@@ -221,12 +222,7 @@ header .post-link:hover .create-new path {
 }
 
 .search-bar #search:hover .search-icon {
-	animation: ani-search 0.8s forwards;
-}
-
-.col {
-	display: flex;
-	flex-direction: column;
+	animation: ani-search 0.8s infinite;
 }
 
 .col article {
@@ -236,6 +232,7 @@ header .post-link:hover .create-new path {
 	background: #fff;
 	box-shadow: 0px 1px 5px 0px #c3c3c3;
 	border-radius: 10px;
+	break-inside: avoid;
 }
 
 .col article div {
@@ -277,6 +274,22 @@ header .post-link:hover .create-new path {
 	color: rgba(0, 0, 0, 0.6);
 }
 
+.col article.event .description {
+	background-color: rgba(211, 32, 31, 0.2);
+}
+
+.col article.service .description {
+	background-color: rgba(55, 167, 252, 0.2);
+}
+
+.col article.sale .description {
+	background-color: rgba(251, 175, 44, 0.2);
+}
+
+.col article.informational .description {
+	background-color: rgba(44, 59, 251, 0.2);
+}
+
 h1 {
 	background: url(../../dist/img/across-the-campus.png) no-repeat center;
 	background-size: auto 100%;
@@ -293,6 +306,10 @@ form {
 	display: flex;
 	flex-flow: column wrap;
 	align-self: center;
+}
+
+form input::-webkit-input-placeholder, form textarea::-webkit-input-placeholder {
+	color: rgba(0, 0, 0, 0.3);
 }
 
 form label {
@@ -380,8 +397,9 @@ form label {
 .comment-section div button {
 	border: none;
 	font-size: 16px;
-	color: #d3201f;
+	color: #34a7fc;
 	transition: 0.3s;
+	padding: 0 5px 0 0;
 }
 
 .comment-section div button:hover {
@@ -417,29 +435,20 @@ form label {
 	display: block;
 }
 
-.comment-form label {
-	justify-content: flex-start;
-	margin: 10px 0;
-}
-
-.comment-form label .comment-user {
-	margin-left: 10px;
+.comment-form .comment-user {
 	width: 100%;
-	height: 20px;
+	height: 23px;
 	max-width: 225px;
 	border: 1px solid #e3e3e3;
 	border-radius: 2px;
 	font-size: 16px;
 	padding: 5px;
+	margin-top: 5px;
 }
 
-.comment-form label:nth-child(3) {
-	flex-flow: row wrap;
-}
-
-.comment-form label:nth-child(3) .comment-input {
+.comment-form .comment-input {
 	width: 100%;
-	margin-top: 10px;
+	margin: 15px 0;
 	padding: 5px;
 	border: 1px solid #e3e3e3;
 	border-radius: 5px;
@@ -448,6 +457,7 @@ form label {
 
 #submit, .send-comment {
 	width: 30%;
+	min-width: 100px;
 	height: 40px;
 	text-transform: uppercase;
 	border: 2px solid #d3201f;

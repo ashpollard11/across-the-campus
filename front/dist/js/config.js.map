@@ -1,0 +1,1 @@
+{"version":3,"sources":["config.js"],"names":["API_URL"],"mappings":";;AACA,IAAMA,UAAU,2BAAhB;AACA","file":"config.js","sourcesContent":["\nconst API_URL = \"http://159.65.67.93:1337/\";\n//const API_URL = \"http://localhost:1337/\";\n\n"]}
