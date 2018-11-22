@@ -66,6 +66,11 @@ const sendPost = function(comm) {
 }
 
 
-
+let validatorUsername = new Validator('input[name=username]')
+let validatorDate = new Validator('input[name=date]')
+let validatorTime = new Validator('input[name=time]')
+let validatorEventTitle = new Validator('input[name=eventTitle]')
+let validatorDescription = new Validator('textarea[name=description]')
+let validatorEmail = new EmailValidator('input[name=email]')
 
 

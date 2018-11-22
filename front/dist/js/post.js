@@ -62,4 +62,11 @@ var sendPost = function sendPost(comm) {
 		console.log(error);
 	});
 };
+
+var validatorUsername = new Validator('input[name=username]');
+var validatorDate = new Validator('input[name=date]');
+var validatorTime = new Validator('input[name=time]');
+var validatorEventTitle = new Validator('input[name=eventTitle]');
+var validatorDescription = new Validator('textarea[name=description]');
+var validatorEmail = new EmailValidator('input[name=email]');
 //# sourceMappingURL=post.js.map

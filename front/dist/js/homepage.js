@@ -23,7 +23,7 @@ var postsFeed = document.querySelector('.col1');
 // }
 
 var showPosts = function showPosts() {
-	console.log("showPOsts");
+	console.log("showPosts");
 	var url = API_URL;
 
 	axios.get(url).then(function (response) {
@@ -126,7 +126,7 @@ var createPostsModule = function () {
 			commentsEl.classList.add('comments');
 			if (arr.comments) {
 				console.log(arr.comments);
-				commentsLabel.innerHTML = "Comments";
+				commentsLabel.innerHTML = "Comments" + " (" + arr.commentsArr.length + ")";
 				commentsButton.innerHTML = '&#9661;';
 				commenter.type = "text";
 				commenter.placeholder = "Name";

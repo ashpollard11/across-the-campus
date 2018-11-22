@@ -23,7 +23,7 @@ const postsFeed = document.querySelector('.col1')
 // }
 
 const showPosts = function() {
-	console.log("showPOsts")
+	console.log("showPosts")
 	let url = API_URL;
 
 	axios.get(url)
@@ -131,7 +131,7 @@ const createPostsModule = (function() {
 			commentsEl.classList.add('comments')
 			if (arr.comments) {
 				console.log(arr.comments)
-				commentsLabel.innerHTML = "Comments"
+				commentsLabel.innerHTML = "Comments" + " (" + arr.commentsArr.length + ")"
 				commentsButton.innerHTML = '&#9661;'
 				commenter.type = "text"
 				commenter.placeholder = "Name"
@@ -181,6 +181,8 @@ const createPostsModule = (function() {
 			article.appendChild(timePostedEl);
 
 			article.appendChild(commentsCont);
+
+			
 
 			//if expiry time passes, remove child
 
@@ -250,6 +252,7 @@ const createPostsModule = (function() {
 			//set comments as active on load 
 			commentsEl.classList.add('active');
 			commentsButton.innerHTML = '&#9655;'
+			
 
 			//create current comments
 

@@ -16,6 +16,13 @@ search.addEventListener("click", function(e) {
 	scrollToTop(postsFeed);
 })
 
+searchInput.addEventListener("keyup", function(e) {
+
+	if (event.keyCode === 13) {
+		search.click()
+	}
+})
+
 let scrollToTop = (element) => {
 	    element.scrollIntoView(true);
 	}

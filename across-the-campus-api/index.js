@@ -98,11 +98,47 @@ app.get('/search/:term', function(req, res) {
 
 	// filter out the expired posts before sending them
 
+	// let filteredPosts = arrayPosts.filter(arr => moment().diff(arr.timeToExpire) < 0);
+	// console.log(filteredPosts)
+	
+	// let searchResult = filteredPosts.filter(arr => Object.values(arr).includes(req.params.term));
+	// res.send(searchResult)
+
 	let filteredPosts = arrayPosts.filter(arr => moment().diff(arr.timeToExpire) < 0);
 	console.log(filteredPosts)
+	    
+	let searchResult = [];
 	
-	let searchResult = filteredPosts.filter(arr => Object.values(arr).includes(req.params.term));
+	filteredPosts.forEach((post) => {
+		console.log(post)
+		let lowered = Object.values(post).map((x) => {
+			if (typeof x == "string") {
+				return x.toLowerCase();
+			}
+			return x;
+		});
+		console.log(lowered);
+	    let regex = new RegExp(req.params.term.toLowerCase());
+		let haystack = Object.values(lowered).join( "|" );
+		let found = regex.test(haystack, "i");
+		console.log('needle', req.params.term.toLowerCase())
+		console.log("haystack", haystack)
+	        
+	//     console.log(regex)
+	    if (found) {
+	   		console.log('found needle in haystack!!!!!!!!', req.params.term)
+	    	searchResult.push(post)
+	    };
+	})
+	    
+	    // let searchResult = filteredPosts.filter(arr =>
+	    //  if ()
+	        
+	    //  regex(req.params.term)
+	    // );
+		
 	res.send(searchResult)
+	
 })
 
 

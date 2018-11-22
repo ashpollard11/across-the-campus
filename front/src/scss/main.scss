@@ -173,7 +173,7 @@ header {
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
 		background: #f9ae3c;
-		transition: 0.3s;
+		transition: 0.4s;
 
 		.search-icon {
 			width: 30px;
@@ -237,6 +237,7 @@ header {
 
 			h3 {
 				font-size: 1.7em;
+				margin-bottom: 10px;
 			}
 		}
 
@@ -320,7 +321,7 @@ form {
 #postForm {
 	max-width: 492px;
 	padding: 0.8em;
-	margin-bottom: 0.8em;
+	margin: 0.8em 0;
 	background: #fff;
 	box-shadow: 0px 1px 5px 0px #c3c3c3;
 	border-radius: 10px;
@@ -423,6 +424,8 @@ form {
 				&:nth-child(1) {
 					font-family: $heading-font;
 					font-size: 0.9em;
+					margin-bottom: 5px;
+    				font-weight: bold;
 				}
 
 				&:nth-child(2) {
@@ -487,6 +490,15 @@ form {
 
 	&.is-active {
 		display: block;
+	}
+}
+
+.error-message {
+	font-size: 13px;
+	color: rgba(242, 8, 8, 0.67);
+	
+	p {
+		margin: 10px 5px 0;
 	}
 }
 
