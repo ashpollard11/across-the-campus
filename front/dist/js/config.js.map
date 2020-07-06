@@ -1,1 +1,1 @@
-{"version":3,"sources":["config.js"],"names":["API_URL"],"mappings":";;AACA;AACA,IAAMA,UAAU,wBAAhB","file":"config.js","sourcesContent":["\n//const API_URL = \"http://159.65.67.93:1337/\";\nconst API_URL = \"http://localhost:1337/\";\n\n"]}
+{"version":3,"sources":["config.js"],"names":["API_URL"],"mappings":";;AACA,IAAMA,UAAU,6BAAhB;AACA","file":"config.js","sourcesContent":["\nconst API_URL = \"http://circuslabs.net:2018/\";\n//const API_URL = \"http://localhost:2018/\";\n\n\n"]}

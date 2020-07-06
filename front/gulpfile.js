@@ -2,10 +2,9 @@
 const gulp = require('gulp'),
 	watch = require('gulp-watch'),
 	sass = require('gulp-sass'),
-	concat = require('gulp-concat'),
 	sourcemaps = require('gulp-sourcemaps'),
+	autoprefixer = require('gulp-autoprefixer'),
 	babel = require('gulp-babel'),
-	eslint = require('gulp-eslint'),
 	changed = require('gulp-changed'),
 	imagemin = require('gulp-imagemin'),
 	htmllint = require('gulp-htmllint'),
@@ -15,11 +14,10 @@ const gulp = require('gulp'),
 	gulpFn  = require('gulp-fn'),
 	axios = require('axios'),
 	fs = require('fs'),
-	util = require('util'),
 	browserSync = require('browser-sync').create()
 
 
-
+// This task refreshes the browser if an HTML file changes
 gulp.task('html-refresh', function(done) {
 	watch(['src/js/**/*.js', 'dist/js/**/*.js', '*.html', '!node_modules/*.*'], { ignoreInitial: false })
 		.pipe(gulpFn(function(file) {
@@ -29,6 +27,8 @@ gulp.task('html-refresh', function(done) {
 });
 	
 
+
+// This task checks HTML files for errors
 gulp.task('html-check', function(done) {
 	watch(['*.html', '!node_modules/*.*'], { ignoreInitial: false })
 		.pipe(plumber())
@@ -53,7 +53,7 @@ var htmllintReporter = function (filepath, issues) {
 	
 
 
-// this task takes sass files and compiles them
+// This task takes SASS files in src and compiles them into CSS in dist
 gulp.task('sass-compile', (done) => {
 	watch('src/scss/**/*.scss') // run over these files
 		.pipe(plumber())
@@ -63,13 +63,16 @@ gulp.task('sass-compile', (done) => {
 			indentType: 'tab', 
 			indentWidth: 1,
 		}))
+		.pipe(autoprefixer({
+			browsers: ['>0.2%']
+		}))
 		.pipe(sourcemaps.write('./')) // put the sourcemaps with the css files
-		.pipe(gulp.dest((file) => file.base.replace('src', 'dist').replace('scss', 'css'))) // put the css files here.
+		.pipe(gulp.dest((file) => file.base.replace('/src', '/dist').replace('/scss', '/css'))) // put the css files here.
 		.pipe(browserSync.stream()) // tell browsersync to send over the changes
 		.pipe(gulpFn(function(file) {
 			if (file.path.indexOf('.css.map') === -1) {
 				console.log("SCSS converted to CSS: ".cyan);
-				console.log(file.path.replace('src', 'dist').replace('scss', 'css'))
+				console.log(file.path.replace('/src', '/dist').replace('/scss', '/css'))
 			}
 		}))
 	done()
@@ -79,9 +82,12 @@ gulp.task('sass-compile', (done) => {
 
 
 
-// this task looks through js files for errors
+// this task compiles modern (es6+/es2015+) JavaScript files in src and recompiles them
+// into older, more broadly compatible (ES5) JavaScript files in dist
 gulp.task('js-compile', (done) => {
 	watch('src/js/**/*.js') // watch these files
+		// .pipe(eslint()) // uncomment for full JS styleguide/error checking
+		// .pipe(eslint.formatEach('pretty')) // uncomment for full JS styleguide/error checking
 		.pipe(plumber())
 		.pipe(sourcemaps.init()) // make sourcemaps for chrome devtools
 		.pipe(babel())
@@ -90,34 +96,41 @@ gulp.task('js-compile', (done) => {
 		})
 		// .pipe(concat('./app.js')) // join all the js files into one // uncomment this line if you want to concatenate all JS files into one.
 		.pipe(sourcemaps.write('./')) // put the sourcemaps with the js files
-		.pipe(gulp.dest((file) => file.base.replace('src', 'dist'))) // put the js files here.
+		.pipe(gulp.dest((file) => file.base.replace('/src', '/dist'))) // put the js files here.
 		.pipe(gulpFn(function(file) {
 			if (file.path.indexOf('.js.map') === -1) {
 				console.log("JS generated: ".cyan);
-				console.log(file.path.replace('src', 'dist'));
+				console.log(file.path.replace('/src', '/dist'));
 			}
 		}))
 	done()	
 });
 
-// this task looks through js files for errors
+
+
+
+
+
+
+
+// This task takes all images dropped in src and recompresses them, and puts them in dist
 gulp.task('image-compress', (done) => {
 	let imgDest = 'dist/img/';
 	watch('src/img/**/*.*') // watch these files
 		.pipe(plumber())
-		.pipe(changed((file) => file.base.replace('src', 'dist')))
+		.pipe(changed((file) => file.base.replace('/src', '/dist')))
 		.pipe(imagemin())
-		.pipe(gulp.dest((file) => file.base.replace('src', 'dist'))) // put the image files here.
+		.pipe(gulp.dest((file) => file.base.replace('/src', '/dist'))) // put the image files here.
 		.pipe(browserSync.stream()) // tell browsersync to send over the changes
 		.pipe(gulpFn(function(file) {
 			console.log("Image compressed and copied to: ".cyan);
-			console.log(file.path.replace('src', 'dist'));
+			console.log(file.path.replace('/src', '/dist'));
 		}))
 	done()
 })
 
 
-
+// This task initializes the BrowserSync thing, which is what refreshes your page when you save a file
 gulp.task('start-browsersync', function(done) {
 	browserSync.init({ // start the browsersync mini-server
 		server: "./", // on the root of the project
@@ -126,12 +139,13 @@ gulp.task('start-browsersync', function(done) {
 })
 
 
-
+// This task says hi.
 gulp.task('welcome', (done) => {
 	console.log(colors.red('Starting Circus Starter template gulpfile! Wizz, whirrrrr, bang, pop!'));
 	done();
 })
 
+// This task says make cool shit.
 gulp.task('make-cool-shit', (done) => {
 	setTimeout(() => {
 		console.log(' ');
@@ -148,7 +162,7 @@ gulp.task('make-cool-shit', (done) => {
 
 
 
-
+// This task checks what version of Circus Starter is on Github, and warns you if your version doesn't match.
 gulp.task('version', (done) => {
 	// pay no attention to the man behind the curtain.
 	fs.readFile('package.json', 'utf8', function (err, data) {
@@ -178,7 +192,7 @@ gulp.task('version', (done) => {
 	});
 })
 
-// running `gulp` runs this task. this task sort of branches off into the others as needed
+// Running `gulp` runs this task. This task sort of branches off into the others as needed.
 gulp.task('default', gulp.series(
 	'welcome', 
 	gulp.parallel(
@@ -193,6 +207,9 @@ gulp.task('default', gulp.series(
 	'version'
 ));
 
+// Running `gulp` runs this task. This task sort of branches off into the others as needed.
+// This version is just missing the BrowserSync stuff, for projects where that wouldn't work, like
+// PHP and Wordpress projects.
 gulp.task('no-browser-sync', gulp.series(
 	'welcome', 
 	gulp.parallel(

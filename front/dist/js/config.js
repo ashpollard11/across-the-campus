@@ -1,5 +1,5 @@
 "use strict";
 
-//const API_URL = "http://159.65.67.93:1337/";
-var API_URL = "http://localhost:1337/";
+var API_URL = "http://circuslabs.net:2018/";
+//const API_URL = "http://localhost:2018/";
 //# sourceMappingURL=config.js.map

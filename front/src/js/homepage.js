@@ -1,8 +1,9 @@
 
-const postsFeed = document.querySelector('.col1')
-// const postsFeed2 = document.querySelector('.col2')
-// const postsFeed3 = document.querySelector('.col3')
-
+const postsFeed = document.querySelector('.inner-cont')
+const col1 = document.createElement("div")
+const col2 = document.createElement("div")
+const col3 = document.createElement("div")
+let cols = [col1, col2, col3]
 
 
 // const deletePosts = function(post) {
@@ -45,6 +46,11 @@ const createPostsModule = (function() {
 		console.log("createPosts", obj)
 
 		postsFeed.innerHTML = ''
+		cols.forEach((col, i) => {
+			col.innerHTML = ''
+			postsFeed.appendChild(col) 
+		})
+
 
 		obj.forEach((arr, i) => {
 			console.log(arr)
@@ -162,7 +168,10 @@ const createPostsModule = (function() {
 			// 	count = 1;
 			// }
 
-			postsFeed.appendChild(article);
+			// postsFeed.appendChild(article);
+			cols[0].appendChild(article);
+			cols.push(cols.shift());
+
 			article.appendChild(dateTimeCont);
 			article.appendChild(titleTypeCont);
 			article.appendChild(userEmailCont);
@@ -182,7 +191,6 @@ const createPostsModule = (function() {
 
 			article.appendChild(commentsCont);
 
-			
 
 			//if expiry time passes, remove child
 

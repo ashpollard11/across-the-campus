@@ -83,25 +83,29 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
-	body .col {
-		column-count: 2;
+	body .inner-cont {
+		-webkit-column-count: 2;
+		        column-count: 2;
 	}
-	body .col article {
+	body .inner-cont article {
+		height: -webkit-fit-content;
+		height: -moz-fit-content;
 		height: fit-content;
 	}
-	body .col article:nth-child(odd) {
+	body .inner-cont article:nth-child(odd) {
 		margin-right: 0.8em;
 	}
 }
 
 @media only screen and (min-width: 1024px) {
-	body .col {
-		column-count: 3;
+	body .inner-cont {
+		-webkit-column-count: 3;
+		        column-count: 3;
 	}
-	body .col article {
+	body .inner-cont article {
 		margin-right: 0.8em;
 	}
-	body .col article:nth-child(3n) {
+	body .inner-cont article:nth-child(3n) {
 		margin-right: 0em;
 	}
 }
@@ -155,8 +159,10 @@ header .post-link {
 	padding: 6px 6px 10px 10px;
 	border-radius: 30%;
 	font-size: 0px;
-	animation: ani-shake 1.8s forwards;
-	animation-delay: 2s;
+	-webkit-animation: ani-shake 1.8s forwards;
+	        animation: ani-shake 1.8s forwards;
+	-webkit-animation-delay: 2s;
+	        animation-delay: 2s;
 	transition: 0.3s;
 }
 
@@ -222,44 +228,46 @@ header .post-link:hover .create-new path {
 }
 
 .search-bar #search:hover .search-icon {
-	animation: ani-search 0.8s infinite;
+	-webkit-animation: ani-search 0.8s infinite;
+	        animation: ani-search 0.8s infinite;
 }
 
-.col article {
+.inner-cont article {
 	width: 100%;
 	padding: 0.8em;
 	margin-bottom: 0.8em;
 	background: #fff;
 	box-shadow: 0px 1px 5px 0px #c3c3c3;
 	border-radius: 10px;
-	break-inside: avoid;
+	-webkit-column-break-inside: avoid;
+	        break-inside: avoid;
 }
 
-.col article div {
+.inner-cont article div {
 	line-height: 1.3;
 	margin-bottom: 10px;
 }
 
-.col article p {
+.inner-cont article p {
 	font-size: 16px;
 }
 
-.col article .dateTimeCont {
+.inner-cont article .dateTimeCont {
 	display: flex;
 	font-size: 0.8em;
 	color: rgba(0, 0, 0, 0.6);
 }
 
-.col article .dateTimeCont p:first-child {
+.inner-cont article .dateTimeCont p:first-child {
 	margin-right: 5px;
 }
 
-.col article .titleTypeCont h3 {
+.inner-cont article .titleTypeCont h3 {
 	font-size: 1.7em;
 	margin-bottom: 10px;
 }
 
-.col article .description {
+.inner-cont article .description {
 	background-color: rgba(100, 156, 204, 0.2);
 	min-height: 50px;
 	padding: 0.3em;
@@ -270,24 +278,24 @@ header .post-link:hover .create-new path {
 	box-shadow: 0px 1px 2px 0px #a0a0a0;
 }
 
-.col article .postDateTime {
+.inner-cont article .postDateTime {
 	font-size: 0.8em;
 	color: rgba(0, 0, 0, 0.6);
 }
 
-.col article.event .description {
+.inner-cont article.event .description {
 	background-color: rgba(211, 32, 31, 0.2);
 }
 
-.col article.service .description {
+.inner-cont article.service .description {
 	background-color: rgba(55, 167, 252, 0.2);
 }
 
-.col article.sale .description {
+.inner-cont article.sale .description {
 	background-color: rgba(251, 175, 44, 0.2);
 }
 
-.col article.informational .description {
+.inner-cont article.informational .description {
 	background-color: rgba(44, 59, 251, 0.2);
 }
 
@@ -374,7 +382,8 @@ form label {
 }
 
 #postForm .check #comments {
-	transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	    transform: scale(1.2);
 	width: unset;
 	height: unset;
 	font-size: unset;
@@ -494,6 +503,31 @@ form label {
 	margin: 10px 5px 0;
 }
 
+@-webkit-keyframes ani-shake {
+	0% {
+		transform: translateY(0px);
+	}
+	15% {
+		transform: translateY(-5px);
+	}
+	20% {
+		transform: translateY(0px);
+	}
+	35% {
+		transform: translateY(-5px);
+	}
+	40% {
+		transform: translateY(0px);
+	}
+	90% {
+		transform: rotate(-20deg);
+		transform-origin: bottom left;
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
 @keyframes ani-shake {
 	0% {
 		transform: translateY(0px);
@@ -513,6 +547,27 @@ form label {
 	90% {
 		transform: rotate(-20deg);
 		transform-origin: bottom left;
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+@-webkit-keyframes ani-search {
+	0% {
+		transform: rotate(0deg);
+	}
+	20% {
+		transform: rotate(10deg);
+		transform-origin: bottom right;
+	}
+	50% {
+		transform: rotate(0deg);
+		transform-origin: bottom right;
+	}
+	75% {
+		transform: rotate(10deg);
+		transform-origin: bottom right;
 	}
 	100% {
 		transform: rotate(0deg);

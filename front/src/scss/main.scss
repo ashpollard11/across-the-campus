@@ -35,7 +35,7 @@ body {
 
 	@include bp-tablet {
 
-		.col {
+		.inner-cont {
 			column-count: 2;
 			// flex-flow: row wrap;
 
@@ -52,7 +52,7 @@ body {
 
 	@include bp-desktop {
 
-		.col {
+		.inner-cont {
 			column-count: 3;
 
 			article {
@@ -194,7 +194,7 @@ header {
 	}
 }
 
-.col {
+.inner-cont {
 	// display: flex;
 	// flex-direction: column;
 	// display: grid;
